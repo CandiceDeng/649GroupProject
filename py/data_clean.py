@@ -21,21 +21,15 @@ def clean_data(infile, outfile, endcol=6):
 
             nations = line[4].replace(')', ' ').replace('(', '')
             nations = nations.split()
-            flag = False
-            country = []
-            for nation in nations:
-                try:
-                    country.append(nation_2_country[nation])
-                except:
-                    flag = True
 
-            if flag:
+            try:
+                nation = nations[0]
+                country = nation_2_country[nation]
+            except:
                 continue
 
-            country = ",".join(country)
+            gender = line[7].split(')')[0].replace('(', '')
 
-            gender = line[7].replace('(', '').replace(')', '').split()
-            gender = ",".join(gender)
             outlist = line[:4] + [country] + line[5:7] + [gender] + line[8:]
             outcsv.writerow(outlist)
 
